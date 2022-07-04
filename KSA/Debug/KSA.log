@@ -1,0 +1,31 @@
+﻿  SHA-256 with KSA.cpp
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1677,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1678,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1681,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1683,17): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1706,17): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1714,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1715,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(1716,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2325,21): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2326,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2327,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2328,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2329,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2330,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2331,30): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2924,23): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2925,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2926,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2927,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2928,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2929,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(2930,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3523,23): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3524,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3525,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3526,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3527,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3528,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+C:\Users\Cameron\source\repos\SHA256 with KSA\SHA256 with KSA\SHA-256 with KSA.cpp(3529,32): warning C4244: '=': conversion from 'unsigned __int64' to 'BYTE', possible loss of data
+  KSA.vcxproj -> C:\Users\Cameron\source\repos\KSA\Debug\KSA.exe
