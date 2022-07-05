@@ -3,15 +3,13 @@
 
 /*********************************************************************
 * Filename:   sha256KSA32.c
-* Author:     Stanley Foo
+* Original Author:     Stanley Foo
 * Project: Greener Bitcoin Mining
-*********************************************************************/
-
-/****
-Later edited by Cameron Balmer, as part of IRP "Greener" Bitcoin Mining using Approximate Computing
-/****
-
-/*************************** HEADER FILES ***************************/
+*********************************************************************
+* Edited by: Cameron Balmer
+* Accessed via public GitHub Repository: https://github.com/sfoo03/SHA256withKSA32 on 24/05/2022
+* Project: "Greener" Bitcoin Mining using Approximate Computing
+*************************** HEADER FILES ***************************/
 #include <process.h> 
 #include <time.h>
 #include <stdlib.h>
@@ -21,6 +19,9 @@ Later edited by Cameron Balmer, as part of IRP "Greener" Bitcoin Mining using Ap
 #include "SHA-256 with KSA.h"
 #include <string>
 #include <inttypes.h>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 /****************************** MACROS ******************************/
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
@@ -1666,6 +1667,8 @@ WORD KSA32N16(WORD n, WORD m) // range -4294967296 to 4294967296 each number
 
 }
 #pragma endregion
+
+//Cost Functions
 
 #pragma region Cost functions
 // Original cost for SHA256 with KSA32 adders
@@ -3565,12 +3568,40 @@ int main()
 	float pass1 = 0, pass2 = 0;
 	float fail1 = 0, fail2 = 0;
 	float error1, error2;
-	float stimulation = 0;
+	float simulation = 0;
 
 	// Seed number for rand()
 	srand((unsigned int)time(0) + _getpid());
 
-	// Stimulation 10000 times
+	FILE* fp; //File for non approximate KSA32 Hashes
+	FILE* fp1; //File for approximate KSA32 K=8 Hashes
+	FILE* fp2; //File for approximate KSA32 K=16
+
+	fopen_s(&fp, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\NonApproxKSAHashFile.txt", "w+"); //Open file for non approximate KSA32 Hashes
+	fopen_s(&fp1, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK8HashFile.txt", "w+"); //Open file for approximate KSA32 K=8 Hashes
+	fopen_s(&fp2, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK16HashFile.txt", "w+"); //Open file for approximate KSA32 K=16 Hashes
+
+	if (fp == NULL) //Check if the file is null
+	{
+		printf("file can't be opened\n");
+		exit(1);
+	}
+
+	if (fp1 == NULL) //Check if the file is null
+	{
+		printf("file can't be opened\n");
+		exit(1);
+	}
+
+	if (fp2 == NULL) //Check if the file is null
+	{
+		printf("file can't be opened\n");
+		exit(1);
+	}
+
+	fflush(stdin);
+
+	// Run the simulation 10000 times
 	for (i = 0; i < 1000; i++)
 	{
 
@@ -3592,28 +3623,29 @@ int main()
 			SHA256_input[j] = str[rand() % 22];
 		}
 
-		
-		// Work Area
 		// -------------------------
 		// What is observed here, are the input hashes being hashed again (as is custom within the bitcoin network) using a variety of different schemes.
 		// These are as follows: Non approximate KSA32, Approximate KSA32(K=8) and Approximate KSA32(K=16).
-		// The output hashes from these schemes can be verified to be correc tusing an online SHA256 encoder/decoder.
+		// The output hashes from these schemes can be verified to be correct using an online SHA256 encoder/decoder.
 
 		// What now must be done for my project is to obtain all 1000 simulations of each of the hash outputs from these schemes, and place these within a file to 
 		// Be further analysed within the NIST test suite.
 		// End of Work Area
 		
 		// See hash inputs
-		/*for (j = 0; j < SHA256_BLOCK_SIZE; j++)
+		printf("\n");
+		printf("-----------------------------------------------------------------------------------");
+		printf("\n");
+		printf("--------------------------------- N E W  H A S H ----------------------------------");
+		printf("\n");
+		printf("-----------------------------------------------------------------------------------");
+		printf("\n");
+		printf("Actual Input Hash which is passed into SHA256 functions: ");
+		for (j = 0; j < SHA256_BLOCK_SIZE; j++)
 		{
 			printf("%c", SHA256_input[j]);
 		}
 		printf("\n");
-		printf("Actual Input Hash");
-		printf("\n");
-		printf("-----------------------------------------------------------------------------------");
-		printf("\n");*/
-		
 
 		// SHA256 with non approximate KSA32 
 		sha256_init(&ctx);
@@ -3621,17 +3653,14 @@ int main()
 		sha256_final(&ctx, buf);
 
 		//Print a hash from non approximate KSA
+		printf("Actual hash from non approximate KSA: ");
 		for (s = 0; s < SHA256_BLOCK_SIZE; s++)
 		{
-			//printf("KSA32N8 Hash: ");
-			printf("%02x", buf[s]);
+			printf("%02x", buf[s]); //Print on Console App
+			fprintf(fp, "%02x", buf[s]); //Write to text file
 		}
-		printf("\n");
-		printf("End of hashes from non approximate KSA");
-		printf("\n");
-		printf("-----------------------------------------------------------------------------------");
-		printf("\n");
-
+		fprintf(fp, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
 
 		// sha256 with approximate KSA32(K=8)
 		sha256_initKSA32N8(&ctx1);
@@ -3639,16 +3668,15 @@ int main()
 		sha256_finalKSA32N8(&ctx1, buf1);
 
 		//Print a hash from approximate KSA32(K=8)
+		printf("Hash from approximate KSA32(K=8): ");
 		for (x = 0; x < SHA256_BLOCK_SIZE; x++)
 		{
 			//printf("KSA32N8 Hash: ");
-			printf("%02x", buf1[x]);
+			printf("%02x", buf1[x]); //Print on Console App
+			fprintf(fp1, "%02x", buf1[x]); //Write to text file
 		}
-		printf("\n");
-		printf("End of hashes from approximate KSA32(K=8)");
-		printf("\n");
-		printf("-----------------------------------------------------------------------------------");
-		printf("\n");
+		fprintf(fp1, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
 
 		// sha256 with approximate KSA32(K=16)
 		sha256_initKSA32N16(&ctx2);
@@ -3656,41 +3684,54 @@ int main()
 		sha256_finalKSA32N16(&ctx2, buf2);
 
 		//Print a hash from approximate KSA32(K=16)
+		printf("Hash from approximate KSA32(K=16): ");
 		for (y = 0; y < SHA256_BLOCK_SIZE; y++)
 		{
 			//printf("KSA32N16 Hash:");
-			printf("%02x", buf2[y]);
+			printf("%02x", buf2[y]); //Print on Console App
+			fprintf(fp2, "%02x", buf2[y]); //Write to text file
 		}
-		printf("\n");
-		printf("End of hashes from approximate KSA32(K=16)");
-		printf("\n");
-		printf("-----------------------------------------------------------------------------------");
-		printf("\n");
+		fprintf(fp2, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
 
-		test1 = test1 && !memcmp(buf, buf1, SHA256_BLOCK_SIZE);
+		//Tests
+		test1 = test1 && !memcmp(buf, buf1, SHA256_BLOCK_SIZE); //Comparing memory buffer of hashes from non-approx KSA and approximate KSA(K=8)
 
 		if (test1 == 1)
 		{
 			pass1 = pass1 + 1;
+			printf("\n");
+			printf(" - Non Approximate KSA Hash SUCCESSFULLY Matches Approximate KSA(K=8) Hash!");
+			printf("\n");
 		}
 		else
 		{
 			fail1 = fail1 + 1;
+			printf("\n");
+			printf(" - Non Approximate KSA Hash DOES NOT Match Approximate KSA(K=8) Hash!");
+			printf("\n");
 		}
 
-		test2 = test2 && !memcmp(buf, buf2, SHA256_BLOCK_SIZE);
+		test2 = test2 && !memcmp(buf, buf2, SHA256_BLOCK_SIZE); //Comparing memory buffer of hashes from non-approx KSA and approximate KSA(K=16)
 
 		if (test2 == 1)
 		{
 			pass2 = pass2 + 1;
+			printf("\n");
+			printf(" - Non Approximate KSA Hash SUCCESSFULLY Matches Approximate KSA(K=16) Hash!");
+			printf("\n");
 		}
 		else
 		{
 			fail2 = fail2 + 1;
+			printf("\n");
+			printf(" - Non Approximate KSA Hash DOES NOT Match Approximate KSA(K=16) Hash!");
+			printf("\n");
 		}
-		//return 0;
-
-		stimulation++;
+		printf("\n");
+		printf("***********************************************************************************");
+		printf("\n");
+		simulation++;
 	}
 	// Error rate
 	error1 = (fail1 / (pass1 + fail1));
@@ -3699,25 +3740,32 @@ int main()
 	// Display results and profit
 	// Profit calculation
 	// SHA256 with KSA32 adder
-	/*float k0cost = electricity(0);
+	float k0cost = electricity(0);
 	float k0revenue = totalrevenue(0, k0cost);
 	float k0profit = totalprofit(k0revenue, k0cost);
+
+	printf("-----------------------------------------------------------------------------------");
+	printf("\n");
+	printf("------------------------- E x p e r i m e n t  R e s u l t s ----------------------");
+	printf("\n");
+	printf("-----------------------------------------------------------------------------------");
+	printf("\n");
 	printf("SHA256 with non-approximate KSA32 adder profit & cost \n");
 	printf("Revenue: %.3f \n", k0revenue);
 	printf("Electricity cost: %.3f \n", k0cost);
-	printf("Profit: %.3f \n\n\n\n", k0profit);*/
+	printf("Profit: %.3f \n\n\n\n", k0profit);
 
 
 	// KSA32 against approximate KSA32(k=16)
-	/*printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=16) adder\n");
-	printf("Stimulation: %.f times\n", stimulation);
+	printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=16) adder\n");
+	printf("Simulation: %.f times\n", simulation);
 	printf("Passed: %.f\n", pass2);
 	printf("Failed: %.f\n", fail2);
-	printf("Error rate: %.3f percent\n\n", (error2 * 100));*/
+	printf("Error rate: %.3f percent\n\n", (error2 * 100));
 
 	// Profit calculation
 	// SHA256 with approximate KSA32(k=16) adder
-	/*float k16cost = electricity(error2);
+	float k16cost = electricity(error2);
 	float k16revenue = totalrevenue(error2, k16cost);
 	float k16profit = totalprofit(k16revenue, k16cost);
 	float k16profitgain = ((k16profit / k0profit) - 1) * 100;
@@ -3725,19 +3773,19 @@ int main()
 	printf("Revenue: %.3f \n", k16revenue);
 	printf("Electricity cost: %.3f \n", k16cost);
 	printf("Profit: %.3f \n", k16profit);
-	printf("Profit gain against non-approximate SHA256: %.3f percent \n\n\n\n", k16profitgain);*/
+	printf("Profit gain against non-approximate SHA256: %.3f percent \n\n\n\n", k16profitgain);
 
 
 	// KSA32 against approximate KSA32(k=8) 
-	/*printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=8) adder\n");
-	printf("Stimulation: %.f times\n", stimulation);
+	printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=8) adder\n");
+	printf("Simulation: %.f times\n", simulation);
 	printf("Passed: %.f\n", pass1);
 	printf("Failed: %.f\n", fail1);
-	printf("Error rate: %.3f percent\n\n", (error1 * 100));*/
+	printf("Error rate: %.3f percent\n\n", (error1 * 100));
 
 	// Profit calculation
 	// SHA256 with approximate KSA32(k=8) adder
-	/*float k8cost = electricity(error1);
+	float k8cost = electricity(error1);
 	float k8revenue = totalrevenue(error1, k8cost);
 	float k8profit = totalprofit(k8revenue, k8cost);
 	float k8profitgain = ((k8profit / k0profit) - 1) * 100;
@@ -3746,7 +3794,7 @@ int main()
 	printf("Electricity cost: %.3f \n", k8cost);
 	printf("Profit: %.3f \n", k8profit);
 	printf("Profit gain against non-approximate SHA256: %.3f percent \n\n\n\n", k8profitgain);
-	return(0);*/
+	return(0);
 
 }
 
