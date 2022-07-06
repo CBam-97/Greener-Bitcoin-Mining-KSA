@@ -21,6 +21,7 @@
 #include <inttypes.h>
 #include <iostream>
 #include <fstream>
+#include <bitset>
 using namespace std;
 
 /****************************** MACROS ******************************/
@@ -3550,6 +3551,93 @@ void sha256_finalKSA32N16(SHA256_CTX2* ctx2, BYTE hash[])
 }
 #pragma endregion
 
+//Method to convert hexadecimal output to binary
+
+void convert(string str, FILE* fp)
+{
+	int i = 0;
+	while (str[i])
+	{
+		switch (str[i])
+		{
+		case '0':
+			//printf("0000");
+			fprintf(fp, "0000");
+			break;
+		case '1':
+			//printf("0001");
+			fprintf(fp, "0001");
+			break;
+		case '2':
+			//printf("0010");
+			fprintf(fp, "0010");
+			break;
+		case '3':
+			//printf("0011");
+			fprintf(fp, "0011");
+			break;
+		case '4':
+			//printf("0100");
+			fprintf(fp, "0100");
+			break;
+		case '5':
+			//printf("0101");
+			fprintf(fp, "0101");
+			break;
+		case '6':
+			//printf("0110");
+			fprintf(fp, "0110");
+			break;
+		case '7':
+			//printf("0111");
+			fprintf(fp, "0111");
+			break;
+		case '8':
+			//printf("1000");
+			fprintf(fp, "1000");
+			break;
+		case '9':
+			//printf("1001");
+			fprintf(fp, "1001");
+			break;
+		case 'A':
+		case 'a':
+			//printf("1010");
+			fprintf(fp, "1010");
+			break;
+		case 'B':
+		case 'b':
+			//printf("1011");
+			fprintf(fp, "1011");
+			break;
+		case 'C':
+		case 'c':
+			//printf("1100");
+			fprintf(fp, "1100");
+			break;
+		case 'D':
+		case 'd':
+			//printf("1101");
+			fprintf(fp, "1101");
+			break;
+		case 'E':
+		case 'e':
+			//printf("1110");
+			fprintf(fp, "1110");
+			break;
+		case 'F':
+		case 'f':
+			//printf("1111");
+			fprintf(fp, "1111");
+			break;
+		default:
+			//printf("\please enter valid hexadecimal digit ");
+			fprintf(fp, "please enter valid hexadecimal digit");
+		}
+		i++;
+	}
+}
+
 //Main Program
 
 #pragma region Main Program
@@ -3573,13 +3661,23 @@ int main()
 	// Seed number for rand()
 	srand((unsigned int)time(0) + _getpid());
 
-	FILE* fp; //File for non approximate KSA32 Hashes
-	FILE* fp1; //File for approximate KSA32 K=8 Hashes
-	FILE* fp2; //File for approximate KSA32 K=16
-
+	//Hexadecimal Hash Files
+	FILE* fp; //File for non approximate KSA32 Hashes in hexadecimal
+	FILE* fp1; //File for approximate KSA32 K=8 Hashes in hexadecimal
+	FILE* fp2; //File for approximate KSA32 K=16 Hashes in hexadecimal
+	
 	fopen_s(&fp, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\NonApproxKSAHashFile.txt", "w+"); //Open file for non approximate KSA32 Hashes
 	fopen_s(&fp1, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK8HashFile.txt", "w+"); //Open file for approximate KSA32 K=8 Hashes
 	fopen_s(&fp2, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK16HashFile.txt", "w+"); //Open file for approximate KSA32 K=16 Hashes
+
+	//Binary Hash Files
+	FILE* fp3; //File for non approximate KSA32 Hashes in binary format
+	FILE* fp4; //File for approximate KSA32 K=8 Hashes in binary format
+	FILE* fp5; //File for approximate KSA32 K=16 Hasesh in binary format
+	
+	fopen_s(&fp3, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\NonApproxKSAHashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
+	fopen_s(&fp4, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK8HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
+	fopen_s(&fp5, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK16HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
 
 	if (fp == NULL) //Check if the file is null
 	{
@@ -3602,7 +3700,7 @@ int main()
 	fflush(stdin);
 
 	// Run the simulation 10000 times
-	for (i = 0; i < 1000; i++)
+	for (i = 0; i < 10; i++)
 	{
 
 		int test1 = 1;
@@ -3658,11 +3756,23 @@ int main()
 		{
 			printf("%02x", buf[s]); //Print on Console App
 			fprintf(fp, "%02x", buf[s]); //Write to text file
+				
 		}
 		fprintf(fp, "\n"); //New Line in text file
 		printf("\n"); //New Line on Console Application
 
-		// sha256 with approximate KSA32(K=8)
+		//printf("Binary Output for non approximate KSA hash: ");
+		for (s = 0; s < SHA256_BLOCK_SIZE; s++)
+		{
+			char n[4];
+			snprintf(n, 4, "%02X", buf[s]);
+			string str(n);
+			convert(str, fp3);
+		}
+		fprintf(fp3, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
+
+		//sha256 with approximate KSA32(K=8)
 		sha256_initKSA32N8(&ctx1);
 		sha256_updateKSA32N8(&ctx1, (const BYTE*)SHA256_input, strlen((const char*)SHA256_input));
 		sha256_finalKSA32N8(&ctx1, buf1);
@@ -3671,14 +3781,24 @@ int main()
 		printf("Hash from approximate KSA32(K=8): ");
 		for (x = 0; x < SHA256_BLOCK_SIZE; x++)
 		{
-			//printf("KSA32N8 Hash: ");
 			printf("%02x", buf1[x]); //Print on Console App
 			fprintf(fp1, "%02x", buf1[x]); //Write to text file
 		}
 		fprintf(fp1, "\n"); //New Line in text file
 		printf("\n"); //New Line on Console Application
 
-		// sha256 with approximate KSA32(K=16)
+		//printf("Binary Output for  approximate KSA(K=8) hash: ");
+		for (x = 0; x < SHA256_BLOCK_SIZE; x++)
+		{
+			char n[4];
+			snprintf(n, 4, "%02X", buf1[x]);
+			string str(n);
+			convert(str, fp4);
+		}
+		fprintf(fp4, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
+
+		//sha256 with approximate KSA32(K=16)
 		sha256_initKSA32N16(&ctx2);
 		sha256_updateKSA32N16(&ctx2, (const BYTE*)SHA256_input, strlen((const char*)SHA256_input));
 		sha256_finalKSA32N16(&ctx2, buf2);
@@ -3692,6 +3812,17 @@ int main()
 			fprintf(fp2, "%02x", buf2[y]); //Write to text file
 		}
 		fprintf(fp2, "\n"); //New Line in text file
+		printf("\n"); //New Line on Console Application
+
+		//printf("Binary Output for  approximate KSA(K=16) hash: ");
+		for (y = 0; y < SHA256_BLOCK_SIZE; y++)
+		{
+			char n[4];
+			snprintf(n, 4, "%02X", buf2[y]);
+			string str(n);
+			convert(str, fp5);
+		}
+		fprintf(fp5, "\n"); //New Line in text file
 		printf("\n"); //New Line on Console Application
 
 		//Tests
@@ -3733,7 +3864,7 @@ int main()
 		printf("\n");
 		simulation++;
 	}
-	// Error rate
+	//Error rate
 	error1 = (fail1 / (pass1 + fail1));
 	error2 = (fail2 / (pass2 + fail2));
 
@@ -3746,7 +3877,7 @@ int main()
 
 	printf("-----------------------------------------------------------------------------------");
 	printf("\n");
-	printf("------------------------- E x p e r i m e n t  R e s u l t s ----------------------");
+	printf("------------------------ E X P E R I M E N T  R E S U L T S -----------------------");
 	printf("\n");
 	printf("-----------------------------------------------------------------------------------");
 	printf("\n");
