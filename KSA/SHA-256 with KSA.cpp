@@ -1679,7 +1679,9 @@ float electricity(float a)
 
 	float cost;
 	float power = 5.445; // power consumption per hr
-	float elec = 0.1042; // electricity cost in USA (Kwh)
+	//Original electricity cost set to: 0.1042; // electricity cost in USA (Kwh). Updated on 16/07/22 by Cameron
+	float elec = 0.1447; // electricity cost in USA (Kwh) as of 16/07/2022
+
 	float day = 24; // 24hr in a day
 
 	float p1 = 17.33; // power(mW) in KSA32
@@ -3666,18 +3668,18 @@ int main()
 	FILE* fp1; //File for approximate KSA32 K=8 Hashes in hexadecimal
 	FILE* fp2; //File for approximate KSA32 K=16 Hashes in hexadecimal
 	
-	fopen_s(&fp, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\NonApproxKSAHashFile.txt", "w+"); //Open file for non approximate KSA32 Hashes
-	fopen_s(&fp1, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK8HashFile.txt", "w+"); //Open file for approximate KSA32 K=8 Hashes
-	fopen_s(&fp2, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK16HashFile.txt", "w+"); //Open file for approximate KSA32 K=16 Hashes
+	fopen_s(&fp, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\HashOutputFiles\\NonApproxKSAHashFile.txt", "w+"); //Open file for non approximate KSA32 Hashes
+	fopen_s(&fp1, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK8HashFile.txt", "w+"); //Open file for approximate KSA32 K=8 Hashes
+	fopen_s(&fp2, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\HashOutputFiles\\ApproxKSAK16HashFile.txt", "w+"); //Open file for approximate KSA32 K=16 Hashes
 
 	//Binary Hash Files
 	FILE* fp3; //File for non approximate KSA32 Hashes in binary format
 	FILE* fp4; //File for approximate KSA32 K=8 Hashes in binary format
 	FILE* fp5; //File for approximate KSA32 K=16 Hasesh in binary format
 	
-	fopen_s(&fp3, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\NonApproxKSAHashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
-	fopen_s(&fp4, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK8HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
-	fopen_s(&fp5, "C:\\Users\\Cameron\\source\\repos\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK16HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
+	fopen_s(&fp3, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\BinaryHashOuputFiles\\NonApproxKSAHashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
+	fopen_s(&fp4, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK8HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
+	fopen_s(&fp5, "C:\\Users\\Cameron\\source\\repos\\My Project Code\\KSA\\KSA\\BinaryHashOuputFiles\\ApproxKSAK16HashBinaryFile.txt", "w + "); //Open file for non approximate KSA32 Hashes in binary format
 
 	if (fp == NULL) //Check if the file is null
 	{
@@ -3700,7 +3702,7 @@ int main()
 	fflush(stdin);
 
 	// Run the simulation 10000 times
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 1000; i++)
 	{
 
 		int test1 = 1;
