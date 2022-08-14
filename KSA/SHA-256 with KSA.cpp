@@ -1678,15 +1678,16 @@ float electricity(float a)
 	// a = error rate
 
 	float cost;
-	float power = 5.445; // power consumption per hr
+	float power = 3.250; // power consumption per hr of the bitcoin miner S19 Pro https://shop.bitmain.com/product/detail?pid=00020220616112636834T0C1ADTd062A
 	//Original electricity cost set to: 0.1042; // electricity cost in USA (Kwh). Updated on 16/07/22 by Cameron
-	float elec = 0.1447; // electricity cost in USA (Kwh) as of 16/07/2022
+	float elec = 0.1331; // electricity cost in USA (Kwh) as of 27/07/2022
 
 	float day = 24; // 24hr in a day
 
 	float p1 = 17.33; // power(mW) in KSA32
 	float p2 = 19; // power(mW) in KSA32(k=16)
 	float p3 = 20.4; // power(mW) in KSA32(k=8)
+
 	if (a == 0)
 	{
 		cost = (power * elec) * day; // power consumption cost per day for SHA256 with normal KSA 32 adder
@@ -1707,9 +1708,9 @@ float totalrevenue(float a,float b)
 	// a = error rate
 	// b = electricity cost
 
-	float h = 198; // hash rate
+	float h = 110; // hash rate of the bitcoin miner S19 Pro https://shop.bitmain.com/product/detail?pid=00020220616112636834T0C1ADTd062A
 	float h1, h2; // hash rate for KSA32(k=16) & KSA32(k=8)
-	float y = 0.203; // Mining yield y(t) (USD/Thash) per day
+	float y = 0.20; // Mining yield y(t) (USD/Thash) per day
 
 	float e; // error rate for two rounds (cumulative error rate)
 
@@ -1720,6 +1721,7 @@ float totalrevenue(float a,float b)
 	float delay1 = 1.86; // delay in KSA32
 	float delay2 = 1.73; // reduced delay in KSA32(k=16)
 	float delay3 = 1.58; // reduced delay in KSA32(k = 8)
+
 	float revenue;
 	
 
@@ -3702,7 +3704,7 @@ int main()
 	fflush(stdin);
 
 	// Run the simulation 10000 times
-	for (i = 0; i < 1000; i++)
+	for (i = 0; i < 10000; i++)
 	{
 
 		int test1 = 1;
@@ -3883,14 +3885,18 @@ int main()
 	printf("\n");
 	printf("-----------------------------------------------------------------------------------");
 	printf("\n");
-	printf("SHA256 with non-approximate KSA32 adder profit & cost \n");
+	printf("\n");
+	printf("\n");
+	printf("SHA256 WITH NON-APPROXIMATE KSA32 PROFITS & COST \n");
 	printf("Revenue: %.3f \n", k0revenue);
 	printf("Electricity cost: %.3f \n", k0cost);
 	printf("Profit: %.3f \n\n\n\n", k0profit);
 
 
 	// KSA32 against approximate KSA32(k=16)
-	printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=16) adder\n");
+	printf("-----------------------------------------------------------------------------------");
+	printf("\n");
+	printf("COMPARE SHA256 OUTPUT (Normal KSA32 adder Vs. approximate KSA32(k=16) adder\n");
 	printf("Simulation: %.f times\n", simulation);
 	printf("Passed: %.f\n", pass2);
 	printf("Failed: %.f\n", fail2);
@@ -3902,15 +3908,18 @@ int main()
 	float k16revenue = totalrevenue(error2, k16cost);
 	float k16profit = totalprofit(k16revenue, k16cost);
 	float k16profitgain = ((k16profit / k0profit) - 1) * 100;
-	printf("SHA256 with approximate KSA32(k=16) adder profit & cost \n");
+
+	printf("SHA256 WITH APPROXIMATE KSA32(k=16) PROFITS & COST \n");
 	printf("Revenue: %.3f \n", k16revenue);
 	printf("Electricity cost: %.3f \n", k16cost);
 	printf("Profit: %.3f \n", k16profit);
-	printf("Profit gain against non-approximate SHA256: %.3f percent \n\n\n\n", k16profitgain);
+	printf("Profit gain against non-approximate KSA32: %.3f percent \n\n\n\n", k16profitgain);
 
 
-	// KSA32 against approximate KSA32(k=8) 
-	printf("Compare SHA256 output(Normal KSA32 adder against approximate KSA32(k=8) adder\n");
+	// KSA32 against approximate KSA32(k=8)
+	printf("-----------------------------------------------------------------------------------");
+	printf("\n");
+	printf("COMPARE SHA256 OUTPUT (Normal KSA32 adder Vs. approximate KSA32(k=8) adder\n");
 	printf("Simulation: %.f times\n", simulation);
 	printf("Passed: %.f\n", pass1);
 	printf("Failed: %.f\n", fail1);
@@ -3922,11 +3931,12 @@ int main()
 	float k8revenue = totalrevenue(error1, k8cost);
 	float k8profit = totalprofit(k8revenue, k8cost);
 	float k8profitgain = ((k8profit / k0profit) - 1) * 100;
-	printf("SHA256 with approximate KSA32(k=8) adder profit & cost \n");
+
+	printf("SHA256 WITH APPROXIMATE KSA32(k=8) PROFITS & COST \n");
 	printf("Revenue: %.3f \n", k8revenue);
 	printf("Electricity cost: %.3f \n", k8cost);
 	printf("Profit: %.3f \n", k8profit);
-	printf("Profit gain against non-approximate SHA256: %.3f percent \n\n\n\n", k8profitgain);
+	printf("Profit gain against non-approximate KSA32: %.3f percent \n\n\n\n", k8profitgain);
 	return(0);
 
 }
